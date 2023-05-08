@@ -1,4 +1,4 @@
-import tkinter as tk 
+import tkinter as tk
 from tkinter import messagebox
 import folium
 import webbrowser
@@ -57,7 +57,9 @@ class ParkingSystem:
         username = self.username.get()
         password = self.password.get()
 
-        if username in self.accounts and self.accounts[username] == password:
+        if not username or not password:
+            messagebox.showerror("Error", "Please enter username and password!")
+        elif username in self.accounts and self.accounts[username] == password:
             messagebox.showinfo("Success", "Login successful!")
             self.hide_frames()
             self.show_home_frame()
@@ -88,7 +90,9 @@ class ParkingSystem:
         username = self.username.get()
         password = self.password.get()
 
-        if username in self.accounts:
+        if not username or not password:
+            messagebox.showerror("Error", "Please enter username and password!")
+        elif username in self.accounts:
             messagebox.showerror("Error", "Username already exists!")
         else:
             self.accounts[username] = password
@@ -123,10 +127,18 @@ class ParkingSystem:
         submit_button.pack()
 
     def submit_car_details(self):
-        messagebox.showinfo("Success", "Car details updated successfully!")
-        self.hide_frames()
-        self.show_home_frame()
+        brand = self.brand.get()
+        make = self.make.get()
+        model = self.model.get()
 
+        if not brand or not make or not model:
+            messagebox.showerror("Error", "Please fill in all car details!")
+        else:
+            messagebox.showinfo("Success", "Car details updated successfully!")
+            self.hide_frames()
+            self.show_home_frame()
+
+   
     def show_home_frame(self):
         self.hide_frames()
         self.home_frame.pack()
@@ -199,5 +211,3 @@ if __name__ == "__main__":
     root = tk.Tk()
     parking_system = ParkingSystem(root)
     root.mainloop()
-    
-    
